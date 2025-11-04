@@ -1,0 +1,1473 @@
+
+<html>
+<style type='text/css'>
+	/* ===== INITIAL HELP BUTTON STYLES ===== */
+	.embeddedServiceHelpButton .helpButton .uiButton { 
+		background-color: rgb(228, 0, 70) !important; /* Pink background */
+		font-family: "Arial", sans-serif;
+		border-radius: 16px !important; /* Rounded square shape */
+		width: 60px !important;
+		height: 60px !important;
+		min-width: 60px !important;
+		min-height: 60px !important;
+		border: none !important;
+		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important;
+		transition: all 0.3s ease !important;
+		padding: 0 !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		position: relative !important;
+	}
+
+	.embeddedServiceHelpButton .helpButton .uiButton:hover {
+		background-color: rgb(228, 0, 70) !important; /* Keep same pink color */
+		transform: scale(1.1) !important; /* Scale up effect */
+		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important;
+	}
+
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: none !important;
+		background-color: rgb(228, 0, 70) !important;
+		transform: scale(1.1) !important;
+	}
+
+	.embeddedServiceHelpButton .helpButton .uiButton:active {
+		background-color: rgb(228, 0, 70) !important;
+		transform: scale(1.05) !important;
+	}
+
+	/* Hide all default content */
+	.embeddedServiceHelpButton .helpButton .uiButton * {
+		display: none !important;
+	}
+
+	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel,
+	.embeddedServiceHelpButton .helpButton .uiButton .message,
+	.embeddedServiceHelpButton .helpButton .uiButton .helpButtonLabel__text {
+		display: none !important;
+	}
+
+	/* Megaport logo for initial button - normal state */
+	.embeddedServiceHelpButton .helpButton .uiButton:before {
+		content: "" !important;
+		position: absolute !important;
+		top: 50% !important;
+		left: 50% !important;
+		transform: translate(-50%, -50%) !important;
+		width: 32px !important;
+		height: 32px !important;
+		background-color: white !important;
+		background-image: url("https://megaport--peeklogicd.sandbox.my.site.com/einsteinSupport/resource/1758619710000/MegaportLogoSVG") !important;
+		background-size: 24px 24px !important;
+		background-repeat: no-repeat !important;
+		background-position: center !important;
+		border-radius: 50% !important;
+		z-index: 10 !important;
+		filter: none !important;
+		opacity: 1 !important;
+		transition: opacity 0.3s ease !important;
+	}
+
+	/* Spinner animation keyframes - includes translate to avoid conflict */
+	@keyframes spinnerAnimation {
+		0% {
+			transform: translate(-50%, -50%) rotate(0deg);
+		}
+		100% {
+			transform: translate(-50%, -50%) rotate(360deg);
+		}
+	}
+
+	/* Loading state - hide logo */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:before,
+	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:before {
+		opacity: 0 !important;
+		display: none !important;
+	}
+
+	/* Show loading spinner - with multiple selectors for reliability */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:after,
+	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:after {
+		content: "" !important;
+		position: absolute !important;
+		top: 50% !important;
+		left: 50% !important;
+		width: 28px !important;
+		height: 28px !important;
+		border-radius: 50% !important;
+		border: 3px solid rgba(255, 255, 255, 0.3) !important;
+		border-top-color: white !important;
+		background: transparent !important;
+		box-shadow: none !important;
+		z-index: 11 !important;
+		animation: spinnerAnimation 0.8s linear infinite !important;
+		display: block !important;
+	}
+
+	/* Ensure no animation when not loading */
+	.embeddedServiceHelpButton:not(.loading) .helpButton .uiButton:after,
+	.embeddedServiceHelpButton:not([data-loading="true"]) .helpButton .uiButton:after {
+		display: none !important;
+		animation: none !important;
+	}
+
+	/* Logo hover states for initial button */
+	.embeddedServiceHelpButton .helpButton .uiButton:hover:before,
+	.embeddedServiceHelpButton .helpButton .uiButton:focus:before {
+		background-color: white !important;
+		background-image: url("https://megaport--peeklogicd.sandbox.my.site.com/einsteinSupport/resource/1758619710000/MegaportLogoSVG") !important;
+		filter: none !important;
+		opacity: 1 !important;
+		mix-blend-mode: normal !important;
+	}
+
+	/* Don't show hover logo when loading */
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:hover:before,
+	.embeddedServiceHelpButton.loading .helpButton .uiButton:focus:before,
+	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:hover:before,
+	.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:focus:before {
+		opacity: 0 !important;
+		display: none !important;
+	}
+
+	/* Position the initial button */
+	.embeddedServiceHelpButton {
+		bottom: 20px !important;
+		right: 20px !important;
+		z-index: 1000 !important;
+		position: fixed !important;
+	}
+
+	.embeddedServiceHelpButton .helpButton {
+		width: 60px !important;
+		height: 60px !important;
+		border-radius: 16px !important;
+		overflow: hidden !important;
+	}
+
+	/* ===== MINIMIZED CHAT BUTTON STYLES ===== */
+	.minimizedContainer,
+	button.minimizedContainer,
+	.minimizedContainer:not(.slds-hidden),
+	:host .minimizedContainer,
+	.embeddedServiceSidebar .minimizedContainer,
+	.embeddedServiceSidebar button.minimizedContainer,
+	.embeddedServiceSidebar .dockableContainer .minimizedContainer {
+		position: fixed !important;
+		left: auto !important;
+		bottom: 20px !important;
+		right: 20px !important;
+		margin: 0 !important;
+		width: 60px !important;
+		height: 60px !important;
+		min-width: 60px !important;
+		max-width: 60px !important;
+		min-height: 60px !important;
+		max-height: 60px !important;
+		border-radius: 16px !important;
+		text-align: center !important;
+		text-decoration: none !important;
+		box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4) !important;
+		pointer-events: all !important;
+		overflow: visible !important;
+		background: rgb(228, 0, 70) !important;
+		border: none !important;
+		cursor: pointer !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		flex-direction: column !important;
+		transition: all 0.3s ease !important;
+		font-size: 16px !important;
+		padding: 0 !important;
+		color: white !important;
+		z-index: 1000 !important;
+		transform: none !important;
+		top: auto !important;
+	}
+
+	/* Force positioning override with even higher specificity */
+	body .minimizedContainer,
+	body button.minimizedContainer,
+	body :host .minimizedContainer,
+	body .embeddedServiceSidebar .minimizedContainer,
+	body .embeddedServiceSidebar button.minimizedContainer {
+		bottom: 20px !important;
+		right: 20px !important;
+		top: auto !important;
+		left: auto !important;
+		position: fixed !important;
+	}
+
+	/* Hover effects for minimized button */
+	.minimizedContainer:focus,
+	.minimizedContainer:hover,
+	button.minimizedContainer:focus,
+	button.minimizedContainer:hover,
+	:host .minimizedContainer:focus,
+	:host .minimizedContainer:hover,
+	.embeddedServiceSidebar .minimizedContainer:hover,
+	.embeddedServiceSidebar button.minimizedContainer:hover {
+		transform: scale(1.1) !important;
+		box-shadow: 0 6px 16px rgba(233, 30, 99, 0.6) !important;
+		outline: none !important;
+		background: rgb(228, 0, 70) !important;
+		bottom: 20px !important;
+		right: 20px !important;
+	}
+
+	/* Hide all content in minimized button */
+	.minimizedContainer *,
+	:host .minimizedContainer *,
+	.minimizedContainer .chat-icon,
+	.minimizedContainer .chat-bubble,
+	.minimizedContainer .chat-lines,
+	.minimizedContainer .line,
+	.minimizedContainer .messageContent,
+	.embeddedServiceSidebar .minimizedContainer *,
+	.embeddedServiceSidebar .minimizedContainer .minimizedText,
+	.embeddedServiceSidebar .minimizedContainer .message {
+		display: none !important;
+	}
+
+	/* Add Megaport logo to minimized button */
+	.minimizedContainer:before,
+	:host .minimizedContainer:before,
+	.embeddedServiceSidebar .minimizedContainer:before {
+		content: "" !important;
+		position: absolute !important;
+		top: 50% !important;
+		left: 50% !important;
+		transform: translate(-50%, -50%) !important;
+		width: 32px !important;
+		height: 32px !important;
+		background-color: white !important;
+		background-image: url("https://megaport--peeklogicd.sandbox.my.site.com/einsteinSupport/resource/1758619710000/MegaportLogoSVG") !important;
+		background-size: 24px 24px !important;
+		background-repeat: no-repeat !important;
+		background-position: center !important;
+		border-radius: 50% !important;
+		z-index: 10 !important;
+		filter: none !important;
+		opacity: 1 !important;
+	}
+
+	/* Logo hover states for minimized button */
+	.minimizedContainer:hover:before,
+	.minimizedContainer:focus:before,
+	:host .minimizedContainer:hover:before,
+	:host .minimizedContainer:focus:before,
+	.embeddedServiceSidebar .minimizedContainer:hover:before {
+		background-color: white !important;
+		background-image: url("https://megaport--peeklogicd.sandbox.my.site.com/einsteinSupport/resource/1758619710000/MegaportLogoSVG") !important;
+		filter: none !important;
+		opacity: 1 !important;
+		mix-blend-mode: normal !important;
+	}
+
+	/* ===== MOBILE RESPONSIVE STYLES ===== */
+	@media screen and (max-width: 768px) {
+		.embeddedServiceHelpButton .helpButton .uiButton {
+			width: 50px !important;
+			height: 50px !important;
+			min-width: 50px !important;
+			min-height: 50px !important;
+			border-radius: 14px !important;
+		}
+		
+		.embeddedServiceHelpButton .helpButton {
+			width: 50px !important;
+			height: 50px !important;
+			border-radius: 14px !important;
+		}
+		
+		.embeddedServiceHelpButton .helpButton .uiButton:before {
+			width: 26px !important;
+			height: 26px !important;
+			background-size: 20px 20px !important;
+		}
+
+		/* Mobile loading spinner */
+		.embeddedServiceHelpButton.loading .helpButton .uiButton:after,
+		.embeddedServiceHelpButton[data-loading="true"] .helpButton .uiButton:after {
+			width: 22px !important;
+			height: 22px !important;
+			border: 2.5px solid rgba(255, 255, 255, 0.3) !important;
+			border-top-color: white !important;
+		}
+		
+		.minimizedContainer,
+		button.minimizedContainer,
+		:host .minimizedContainer,
+		.embeddedServiceSidebar .minimizedContainer {
+			width: 50px !important;
+			height: 50px !important;
+			min-width: 50px !important;
+			min-height: 50px !important;
+			max-width: 50px !important;
+			max-height: 50px !important;
+			border-radius: 14px !important;
+			bottom: 20px !important;
+			right: 20px !important;
+		}
+		
+		.minimizedContainer:before,
+		:host .minimizedContainer:before,
+		.embeddedServiceSidebar .minimizedContainer:before {
+			width: 26px !important;
+			height: 26px !important;
+			background-size: 20px 20px !important;
+		}
+		
+		.embeddedServiceHelpButton {
+			bottom: 20px !important;
+			right: 20px !important;
+		}
+	}
+
+	/* Hide chat input initially */
+	.chasitorText {
+		display: none !important;
+	}
+
+	/* ===== RESTART BUTTON STYLES ===== */
+	.restart-chat-button {
+		background: transparent !important;
+		color: rgba(255, 255, 255, 0.7) !important;
+		border: none !important;
+		border-radius: 0 !important;
+		padding: 8px 0 !important;
+		font-size: 13px !important;
+		font-weight: 600 !important;
+		cursor: pointer !important;
+		transition: all 0.2s ease !important;
+		margin: 0 auto !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		gap: 6px !important;
+		width: auto !important;
+		max-width: none !important;
+		box-shadow: none !important;
+		position: relative !important;
+		text-decoration: none !important;
+	}
+
+	/* Remove the CSS-created icon */
+	.restart-chat-button:before {
+		display: none !important;
+	}
+
+	.restart-chat-button:after {
+		display: none !important;
+	}
+
+	.restart-chat-button:hover {
+		color: white !important;
+		background: transparent !important;
+		box-shadow: none !important;
+		transform: none !important;
+	}
+
+	.restart-chat-button:active {
+		transform: scale(0.95) !important;
+		box-shadow: none !important;
+	}
+
+	/* Underline effect on hover */
+	.restart-button-container {
+		position: relative !important;
+		bottom: auto !important;
+		left: 0 !important;
+		right: 0 !important;
+		width: 100% !important;
+		padding: 8px 0 !important;
+		margin: 0 !important;
+		z-index: 1000 !important;
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+
+	.restart-button-container:after {
+		content: "" !important;
+		position: absolute !important;
+		bottom: 6px !important;
+		left: 50% !important;
+		transform: translateX(-50%) scaleX(0) !important;
+		width: auto !important;
+		height: 1px !important;
+		background-color: white !important;
+		transition: transform 0.2s ease !important;
+	}
+
+	.restart-button-container:hover:after {
+		transform: translateX(-50%) scaleX(1) !important;
+		width: 150px !important;
+	}
+
+	/* Position restart button in footer */
+	.embeddedServiceSidebarFooter {
+		position: relative !important;
+		padding-bottom: 0 !important;
+	}
+	
+	/* Ensure footer content flows properly */
+	.chasitorControls {
+		display: flex !important;
+		flex-direction: column !important;
+	}
+
+	.embeddedServiceLiveAgentStateChatInputFooter {
+		background-color:  rgb(228, 0, 70) !important;
+	}
+
+		/* ===== PREVENT OVERFLOW ON LAPTOP/DESKTOP VIEWPORTS ===== */
+		/* Cap the chat widget to the visible viewport minus 40px for margins */
+		.embeddedServiceSidebar .dockableContainer {
+			max-height: calc(100vh - 40px) !important;
+			max-width: calc(100vw - 40px) !important;
+			box-sizing: border-box !important;
+		}
+
+		/* Better mobile viewport handling on iOS (accounts for browser chrome) */
+		@supports (height: 100dvh) {
+			.embeddedServiceSidebar .dockableContainer {
+				max-height: calc(100dvh - 24px) !important;
+				max-width: calc(100svw - 16px) !important;
+				padding-bottom: env(safe-area-inset-bottom, 0) !important;
+			}
+		}
+
+		@media screen and (max-width: 768px) {
+			.embeddedServiceSidebar .dockableContainer {
+				width: auto !important; /* allow JS to set exact px width */
+				left: auto !important;
+				right: 8px !important;
+				bottom: 8px !important;
+			}
+		}
+
+
+	/* ===== CHAT MENU BUTTONS - RESPONSIVE WIDTH & RIGHT ALIGNED ===== */
+	
+	/* Force the entire message container to align right */
+	.embeddedServiceSidebarDialogState .messageContent,
+	.embeddedServiceLiveAgentStateChatItem .messageContent,
+	.embeddedServiceLiveAgentStateChatItem.agent .messageContent {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-end !important;
+		justify-content: flex-end !important;
+		width: 100% !important;
+		text-align: right !important;
+	}
+	
+	/* Target the paragraph/div wrappers */
+	.embeddedServiceSidebarDialogState .messageContent p,
+	.embeddedServiceLiveAgentStateChatItem .messageContent p,
+	.embeddedServiceSidebarDialogState .messageContent div,
+	.embeddedServiceLiveAgentStateChatItem .messageContent div {
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: flex-end !important;
+		width: 100% !important;
+		margin-left: auto !important;
+		margin-right: 0 !important;
+	}
+	
+	/* Buttons with auto width based on content - aligned right */
+	.embeddedServiceSidebarDialogState .messageContent button,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button,
+	.embeddedServiceSidebarDialogState .uiButton,
+	.embeddedServiceLiveAgentStateChatItem .uiButton,
+	.embeddedServiceSidebarDialogState .slds-button,
+	.embeddedServiceLiveAgentStateChatItem .slds-button,
+	button.slds-button {
+		width: auto !important;
+		max-width: 90% !important;
+		min-width: 120px !important;
+		display: inline-block !important;
+		margin: 4px 0 4px auto !important;
+		padding: 8px 24px !important;
+		box-sizing: border-box !important;
+		text-align: center !important;
+		white-space: nowrap !important;
+		float: right !important;
+		clear: both !important;
+	}
+	
+	/* Links should also align right */
+	.embeddedServiceSidebarDialogState a,
+	.embeddedServiceLiveAgentStateChatItem a {
+		display: inline-block !important;
+		margin: 4px 0 4px auto !important;
+		width: auto !important;
+		max-width: 90% !important;
+		float: right !important;
+		clear: both !important;
+	}
+	
+	/* Clear floats after button groups */
+	.embeddedServiceSidebarDialogState .messageContent:after,
+	.embeddedServiceLiveAgentStateChatItem .messageContent:after {
+		content: "" !important;
+		display: table !important;
+		clear: both !important;
+	}
+	
+	/* Mobile responsive - smaller padding */
+	@media screen and (max-width: 768px) {
+		.embeddedServiceSidebarDialogState .messageContent button,
+		.embeddedServiceLiveAgentStateChatItem .messageContent button,
+		.embeddedServiceSidebarDialogState .uiButton,
+		.embeddedServiceLiveAgentStateChatItem .uiButton {
+			padding: 6px 16px !important;
+			min-width: 100px !important;
+			font-size: 14px !important;
+		}
+	}
+
+
+	/* Remove any pseudo-elements or overlays */
+	.embeddedServiceSidebarDialogState .messageContent button:hover::before,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::before,
+	.embeddedServiceSidebarDialogState .uiButton:hover::before,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover::before,
+	.embeddedServiceSidebarDialogState .slds-button:hover::before,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover::before,
+	.embeddedServiceSidebarDialogState .messageContent button:hover::after,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover::after,
+	.embeddedServiceSidebarDialogState .uiButton:hover::after,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover::after,
+	.embeddedServiceSidebarDialogState .slds-button:hover::after,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover::after {
+		display: none !important;
+		opacity: 0 !important;
+	}
+	
+	/* Hover state for all chat buttons - with exact color */
+	.embeddedServiceSidebarDialogState .messageContent button:hover,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
+	.embeddedServiceSidebarDialogState .uiButton:hover,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover,
+	.embeddedServiceSidebarDialogState .slds-button:hover,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover,
+	button.slds-button:hover {
+		background: rgb(228, 0, 70) !important;
+		background-color: rgb(228, 0, 70) !important;
+		color: white !important;
+		border-color: rgb(228, 0, 70) !important;
+		transition: all 0.2s ease !important;
+		opacity: 1 !important;
+		filter: none !important;
+	}
+	
+	/* Target nested span elements that might affect color */
+	.embeddedServiceSidebarDialogState .messageContent button:hover span,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover span,
+	.embeddedServiceSidebarDialogState .uiButton:hover span,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover span,
+	.embeddedServiceSidebarDialogState .slds-button:hover span,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover span {
+		color: white !important;
+		opacity: 1 !important;
+	}
+	
+	/* Focus state (for keyboard navigation) */
+	.embeddedServiceSidebarDialogState .messageContent button:focus,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:focus,
+	.embeddedServiceSidebarDialogState .uiButton:focus,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:focus,
+	.embeddedServiceSidebarDialogState .slds-button:focus,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:focus,
+	button.slds-button:focus {
+		background: rgb(228, 0, 70) !important;
+		background-color: rgb(228, 0, 70) !important;
+		color: white !important;
+		border-color: rgb(228, 0, 70) !important;
+		outline: none !important;
+		box-shadow: 0 0 0 2px rgba(228, 0, 70, 0.3) !important;
+		opacity: 1 !important;
+		filter: none !important;
+	}
+	
+	/* Active state (when clicking) */
+	.embeddedServiceSidebarDialogState .messageContent button:active,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:active,
+	.embeddedServiceSidebarDialogState .uiButton:active,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:active,
+	.embeddedServiceSidebarDialogState .slds-button:active,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:active,
+	button.slds-button:active {
+		background: rgb(228, 0, 70) !important;
+		background-color: rgb(228, 0, 70) !important;
+		transform: scale(0.98) !important;
+		opacity: 1 !important;
+		filter: none !important;
+	}
+	
+	
+	/* ===== RED BORDER FOR CHAT BUTTONS ===== */
+	
+	/* Normal state - red border */
+	.embeddedServiceSidebarDialogState .messageContent button,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button,
+	.embeddedServiceSidebarDialogState .uiButton,
+	.embeddedServiceLiveAgentStateChatItem .uiButton,
+	.embeddedServiceSidebarDialogState .slds-button,
+	.embeddedServiceLiveAgentStateChatItem .slds-button,
+	button.slds-button {
+		border: 1px solid rgb(228, 0, 70) !important;
+		border-color: rgb(228, 0, 70) !important;
+	}
+	
+	/* Keep red border on hover */
+	.embeddedServiceSidebarDialogState .messageContent button:hover,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:hover,
+	.embeddedServiceSidebarDialogState .uiButton:hover,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:hover,
+	.embeddedServiceSidebarDialogState .slds-button:hover,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:hover,
+	button.slds-button:hover {
+		border: 1px solid rgb(228, 0, 70) !important;
+		border-color: rgb(228, 0, 70) !important;
+	}
+	
+	/* Keep red border on focus */
+	.embeddedServiceSidebarDialogState .messageContent button:focus,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:focus,
+	.embeddedServiceSidebarDialogState .uiButton:focus,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:focus,
+	.embeddedServiceSidebarDialogState .slds-button:focus,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:focus,
+	button.slds-button:focus {
+		border: 1px solid rgb(228, 0, 70) !important;
+		border-color: rgb(228, 0, 70) !important;
+	}
+	
+	/* Keep red border on active */
+	.embeddedServiceSidebarDialogState .messageContent button:active,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button:active,
+	.embeddedServiceSidebarDialogState .uiButton:active,
+	.embeddedServiceLiveAgentStateChatItem .uiButton:active,
+	.embeddedServiceSidebarDialogState .slds-button:active,
+	.embeddedServiceLiveAgentStateChatItem .slds-button:active,
+	button.slds-button:active {
+		border: 1px solid rgb(228, 0, 70) !important;
+		border-color: rgb(228, 0, 70) !important;
+	}
+
+/* ===== FIX BUTTON TEXT OVERFLOW ===== */
+
+/* Allow text to wrap and button to expand */
+.embeddedServiceSidebarDialogState .messageContent button,
+.embeddedServiceLiveAgentStateChatItem .messageContent button,
+.embeddedServiceSidebarDialogState .uiButton,
+.embeddedServiceLiveAgentStateChatItem .uiButton,
+.embeddedServiceSidebarDialogState .slds-button,
+.embeddedServiceLiveAgentStateChatItem .slds-button,
+button.slds-button {
+	white-space: normal !important;
+	word-wrap: break-word !important;
+	overflow-wrap: break-word !important;
+	min-height: 40px !important;
+	height: auto !important;
+	max-height: none !important;
+	line-height: 1.4 !important;
+	padding: 10px 20px !important;
+	vertical-align: middle !important;
+}
+
+/* Ensure button text/spans also wrap */
+.embeddedServiceSidebarDialogState .messageContent button span,
+.embeddedServiceLiveAgentStateChatItem .messageContent button span,
+.embeddedServiceSidebarDialogState .uiButton span,
+.embeddedServiceLiveAgentStateChatItem .uiButton span,
+.embeddedServiceSidebarDialogState .slds-button span,
+.embeddedServiceLiveAgentStateChatItem .slds-button span {
+	white-space: normal !important;
+	word-wrap: break-word !important;
+	overflow-wrap: break-word !important;
+}
+
+/* Mobile - responsive padding */
+@media screen and (max-width: 768px) {
+	.embeddedServiceSidebarDialogState .messageContent button,
+	.embeddedServiceLiveAgentStateChatItem .messageContent button,
+	.embeddedServiceSidebarDialogState .uiButton,
+	.embeddedServiceLiveAgentStateChatItem .uiButton {
+		min-height: 36px !important;
+		padding: 8px 16px !important;
+	}
+}
+
+/* ===== HIDE FOOTER MENU WRAPPER ===== */
+
+/* Hide the footer menu wrapper completely */
+div.footerMenuWrapper,
+.footerMenuWrapper,
+.embeddedServiceSidebar .footerMenuWrapper,
+.embeddedServiceSidebar div.footerMenuWrapper {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+/* ===== ALIGN AGENT MESSAGES TO THE LEFT ===== */
+
+/* Override right alignment for agent messages only */
+.chat-content.agent,
+div.chat-content.agent,
+.embeddedServiceLiveAgentStateChatItem.agent .chat-content,
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent {
+	text-align: left !important;
+}
+
+/* Align agent message paragraphs and divs to the left */
+.chat-content.agent p,
+.embeddedServiceLiveAgentStateChatItem.agent .chat-content p,
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent p {
+	text-align: left !important;
+}
+
+/* Fix links in agent messages - override the right-aligned link styles */
+.chat-content.agent a,
+.embeddedServiceLiveAgentStateChatItem.agent .chat-content a,
+.embeddedServiceLiveAgentStateChatItem.agent .messageContent a,
+.embeddedServiceLiveAgentStateChatItem.agent a {
+	display: inline !important;
+	float: none !important;
+	margin: 0 !important;
+	width: auto !important;
+	max-width: none !important;
+	text-align: left !important;
+	clear: none !important;
+	word-break: break-word !important;
+	overflow-wrap: break-word !important;
+}
+/* ===== CENTER BUTTONS IN DIALOG BUTTON CONTAINER ===== */
+
+.dialogButtonContainer,
+div.dialogButtonContainer,
+.embeddedServiceSidebar .dialogButtonContainer {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	justify-content: center !important;
+	text-align: center !important;
+	width: 100% !important;
+}
+
+.dialogButtonContainer button,
+div.dialogButtonContainer button,
+.embeddedServiceSidebar .dialogButtonContainer button {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	float: none !important;
+}
+
+/* ===== DIALOG BUTTON COLOR OVERRIDE ===== */
+
+/* Target dialog buttons - black text by default */
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton {
+	color: black !important;
+    background-color: white !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton span,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton span {
+	color: black !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* White text on hover */
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton:hover,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton:hover {
+	color: white !important;
+    background-color: rgb(228, 0, 70) !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+}
+
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton:hover span,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton:hover span {
+	color: white !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* ===== END CHAT / SAVE TRANSCRIPT BUTTON COLOR OVERRIDE ===== */
+
+/* Target end chat and save transcript buttons - black text and white background by default */
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton {
+	color: black !important;
+    background-color: white !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton span,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton span {
+	color: black !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* White text and pink background on hover */
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton:hover,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton:hover {
+	color: white !important;
+    background-color: rgb(228, 0, 70) !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+}
+
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton:hover span,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton:hover span {
+	color: white !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* ===== CLOSE CHAT BUTTON COLOR OVERRIDE ===== */
+
+/* Target close chat button - black text and white background by default */
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton {
+	color: black !important;
+    background-color: white !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton span,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton span {
+	color: black !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* White text and pink background on hover */
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton:hover,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton:hover {
+	color: white !important;
+    background-color: rgb(228, 0, 70) !important;
+    border: 1px solid rgb(228, 0, 70) !important;
+    border-color: rgb(228, 0, 70) !important;
+}
+
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton:hover span,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton:hover span {
+	color: white !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* ===== ADJUST SPAN TAGS TO FILL FULL BUTTON WIDTH AND HEIGHT ===== */
+
+/* Make span tags fill the full button area for all dialog/end chat buttons */
+.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton span,
+button.dialogButton.dialog-button-0.uiButton.embeddedServiceSidebarButton span,
+.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton span,
+button.endChatButton.saveTranscriptButton.uiButton--inverse.uiButton.embeddedServiceSidebarButton span,
+.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton span,
+button.endChatButton.closeChatButton.uiButton--default.uiButton.embeddedServiceSidebarButton span {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 100% !important;
+	height: 100% !important;
+	padding: inherit !important;
+	line-height: inherit !important;
+	box-sizing: border-box !important;
+	text-align: center !important;
+}
+
+/* ===== ADD VERTICAL SPACING IN END CHAT CONTAINER ===== */
+
+/* Add vertical spacing between buttons in end chat container */
+.endChatContainer,
+div.endChatContainer {
+	display: flex !important;
+	flex-direction: column !important;
+	gap: 10px !important;
+	padding: 16px !important;
+}
+
+/* Add margin between buttons as fallback for browsers that don't support gap */
+.endChatContainer button,
+div.endChatContainer button {
+	margin-bottom: 12px !important;
+}
+
+.endChatContainer button:last-child,
+div.endChatContainer button:last-child {
+	margin-bottom: 0 !important;
+}
+
+</style>
+	
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript'>
+	if (!window.insent) {
+		window.insent = {};
+	}
+	// Greeting Message Closed Event
+	window.insent.greetingMessageClosed = function (event) {
+		window.dataLayer = window.dataLayer || [];
+		window.dataLayer.push({
+			'event': 'greetingMessageClosed',
+			'eventCategory': 'Chat',
+			'eventAction': 'Greeting Message Closed',
+			'eventLabel': 'Chat Greeting'
+		});
+	};
+	// Function to get device type based on screen width
+	function getDeviceType() {
+		console.log('added greetingMessageClosed');
+		var screenWidth = window.innerWidth;
+		if (screenWidth <= 768) return 'mobile';
+		if (screenWidth <= 1024) return 'tablet';
+		return 'desktop';
+	}
+
+	// Function to set up click listeners for chat menu buttons
+	function setupButtonClickLogging() {
+		// Use event delegation on the document to catch dynamically added buttons
+		document.addEventListener('click', function(event) {
+			var target = event.target;
+			
+			// Check if clicked element is a button or inside a button
+			var button = target.closest('button.embeddedServiceLiveAgentStateChatButtonItem');
+			
+			if (!button) {
+				// Also check for the specific class combination
+				button = target.closest('button.rich-button-item');
+			}
+			
+			if (!button) {
+				// Check if target itself is a button with uiButton class
+				if (target.tagName === 'BUTTON' && target.classList.contains('uiButton')) {
+					button = target;
+				}
+			}
+			
+			if (button) {
+				// Get button text from span or direct text content
+				var buttonText = button.textContent.trim();
+				
+				console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+				console.log('🔘 BUTTON CLICKED');
+				console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+				console.log('📝 Button Text:', buttonText);
+				console.log('🔍 Button Element:', button);
+				console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+				var customEvent = new CustomEvent('chatButtonClicked', {
+					detail: { buttonText: buttonText },
+					bubbles: true,
+					composed: true
+				});
+				document.dispatchEvent(customEvent);
+
+			}
+		}, true); // Use capture phase to ensure we catch it early
+		
+		console.log('✅ Button click logging initialized');
+	}
+
+	// Initialize button logging when DOM is ready
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupButtonClickLogging);
+	} else {
+		setupButtonClickLogging();
+	}
+
+	// Add event listener for transferredNoAgentAvailableMessage
+	var noAgentMessage = '';
+	document.addEventListener('transferredNoAgentAvailableMessage', function(event) {
+		noAgentMessage = event.detail.noAgentAvailableMessage;
+		console.log('No Agent Message:', noAgentMessage);
+	});
+
+	// Function to add restart button to chat footer
+	function addRestartButton() {
+	    setTimeout(function() {
+	        var footer = document.querySelector('.chasitorControls');
+	        console.log('chasitorControls', footer);
+	        
+	        // Check if button already exists
+	        if (footer && !document.querySelector('.restart-button-container')) {
+	            var buttonContainer = document.createElement('div');
+	            buttonContainer.className = 'restart-button-container';
+	            
+	            var restartButton = document.createElement('button');
+	            restartButton.className = 'restart-chat-button';
+	            restartButton.textContent = '↻ Restart conversation';
+	            restartButton.setAttribute('aria-label', 'Restart chat conversation');
+	            
+	            restartButton.addEventListener('click', function() {
+	                console.log("Restarting chat...");
+	                
+	                // Clear transfer state when restarting
+	                localStorage.removeItem('chatTransferSuccessful');
+	                localStorage.removeItem('chatSessionKey');
+	                
+	                // End the current chat session
+	                embedded_svc.liveAgentAPI.endChat();
+	                
+	                // Wait for chat to end, then reopen the window
+	                setTimeout(function() {
+	                    // Find and click the help button or minimized button to reopen
+	                    var helpButton = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+	                    var minimizedButton = document.querySelector('.minimizedContainer');
+	                    
+	                    var buttonToClick = helpButton || minimizedButton;
+	                    
+	                    if (buttonToClick) {
+	                        buttonToClick.click();
+	                        console.log("Chat window reopened successfully");
+	                        
+	                        // After reopening, start a new chat session
+	                        setTimeout(function() {
+	                            embedded_svc.liveAgentAPI.startChat({
+	                                directToAgentRouting: {
+	                                    buttonId: '5739n000000dMIP',
+	                                    fallback: true
+	                                },
+	                                extraPrechatInfo: [],
+	                                extraPrechatFormDetails: []
+	                            });
+	                        }, 1000);
+	                    } else {
+	                        console.error("Could not find button to reopen chat");
+	                    }
+	                }, 500);
+	            });
+	            
+	            buttonContainer.appendChild(restartButton);
+	            footer.appendChild(buttonContainer);
+	            console.log('Restart button added successfully');
+	        } else if (footer) {
+	            console.log('Restart button already exists');
+	        }
+	    }, 500);
+	}
+
+	// Track if observer is already set up
+	var footerObserverActive = false;
+
+	// Function to set up MutationObserver for chat footer
+	function setupFooterObserver() {
+	    // Prevent duplicate observers
+	    if (footerObserverActive) {
+	        console.log('Footer observer already active');
+	        return;
+	    }
+	    
+	    var observer = new MutationObserver(function(mutations) {
+	        // Check if footer exists and restart button doesn't
+	        var footer = document.querySelector('.chasitorControls');
+	        var restartButtonExists = document.querySelector('.restart-button-container');
+	        var endChatDialog = document.querySelector('.dialogState');
+	        
+	        // If footer exists, button doesn't exist, and end chat dialog is not visible
+	        if (footer && !restartButtonExists && !endChatDialog) {
+	            console.log('Footer found without restart button - adding it now');
+	            addRestartButton();
+	        }
+	    });
+	    
+	    // Start observing the entire chat sidebar for changes
+	    var chatSidebar = document.querySelector('.embeddedServiceSidebar');
+	    if (chatSidebar) {
+	        observer.observe(chatSidebar, {
+	            childList: true,
+	            subtree: true,
+	            attributes: true,
+	            attributeFilter: ['class', 'style']
+	        });
+	        footerObserverActive = true;
+	        console.log('Footer observer setup complete');
+	    } else {
+	        // If sidebar doesn't exist yet, try again after a delay
+	        setTimeout(setupFooterObserver, 500);
+	    }
+	}
+
+
+	
+	// Function to set widget dimensions based on device type
+	function setWidgetDimensions(deviceType) {
+		if (!embedded_svc || !embedded_svc.settings) return;
+
+		// Compute sizes relative to viewport; prefer visualViewport on iOS/Chrome
+		var vv = window.visualViewport;
+		var vw = vv ? Math.floor(vv.width) : Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+		var vh = vv ? Math.floor(vv.height) : Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+		var widthPx;
+		var heightPx;
+
+			switch(deviceType) {
+			case 'mobile':
+					widthPx = Math.min(vw - 16, vw); // small side padding
+					heightPx = Math.min(Math.floor(vh * 0.92), vh - 16); // avoid toolbars/home bar
+				break;
+			case 'tablet':
+				widthPx = Math.min(380, vw - 40);
+				heightPx = Math.min(Math.floor(vh * 0.85), 620, vh - 40);
+				break;
+			case 'desktop':
+			default:
+				widthPx = Math.min(420, vw - 40);
+				heightPx = Math.min(Math.floor(vh * 0.92), 860, vh - 40);
+				break;
+		}
+
+		embedded_svc.settings.widgetWidth = widthPx + 'px';
+		embedded_svc.settings.widgetHeight = heightPx + 'px';
+	}
+
+	// Function to apply CSS changes for responsive behavior
+	function applyCSSChanges(deviceType) {
+		var chatContainer = document.querySelector('.embeddedServiceSidebar .dockableContainer');
+		
+		if (chatContainer) {
+			var vv = window.visualViewport;
+			var vw = vv ? Math.floor(vv.width) : Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+			var vh = vv ? Math.floor(vv.height) : Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+			var widthPx;
+			var heightPx;
+
+			switch(deviceType) {
+				case 'mobile':
+					widthPx = Math.min(vw - 16, vw);
+					heightPx = Math.min(Math.floor(vh * 0.92), vh - 16);
+					break;
+				case 'tablet':
+					widthPx = Math.min(380, vw - 40);
+					heightPx = Math.min(Math.floor(vh * 0.85), 620, vh - 40);
+					break;
+				case 'desktop':
+				default:
+					widthPx = Math.min(420, vw - 40);
+					heightPx = Math.min(Math.floor(vh * 0.92), 860, vh - 40);
+					break;
+			}
+
+			chatContainer.style.width = widthPx + 'px';
+			chatContainer.style.height = heightPx + 'px';
+			chatContainer.style.left = '';
+			chatContainer.style.bottom = '';
+		}
+	}
+
+	// Function to fix button styling after it loads
+	function fixButtonStyling() {
+		setTimeout(function() {
+			var button = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+			var helpButton = document.querySelector('.embeddedServiceHelpButton');
+			
+			if (button) {
+				// Force circular shape
+				button.style.borderRadius = '50%';
+				button.style.width = '60px';
+				button.style.height = '60px';
+				button.style.minWidth = '60px';
+				button.style.minHeight = '60px';
+				button.style.padding = '0';
+				button.style.display = 'flex';
+				button.style.alignItems = 'center';
+				button.style.justifyContent = 'center';
+				
+				// Hide any text content
+				var textElements = button.querySelectorAll('*');
+				textElements.forEach(function(el) {
+					el.style.display = 'none';
+				});
+			}
+
+			// Ensure consistent positioning across all devices
+			if (helpButton) {
+				helpButton.style.bottom = '20px';
+				helpButton.style.right = '20px';
+			}
+		}, 100);
+	}
+
+	
+	// Enhanced function to trigger loading animation
+	function startLoadingAnimation() {
+		var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		if (helpButton) {
+			helpButton.classList.add('loading');
+			helpButton.setAttribute('data-loading', 'true');
+			console.log('Loading animation started');
+		}
+	}
+
+	// Enhanced function to stop loading animation
+	function stopLoadingAnimation() {
+		var helpButton = document.querySelector('.embeddedServiceHelpButton');
+		if (helpButton) {
+			helpButton.classList.remove('loading');
+			helpButton.removeAttribute('data-loading');
+			console.log('Loading animation stopped');
+		}
+	}
+	
+	function addChasitorText() {
+		var chasitorText = document.querySelector('.chasitorText');
+		if (chasitorText) {
+			chasitorText.style.setProperty('display', 'block', 'important');
+			console.log('chasitorText shown', chasitorText);
+		}
+	}
+
+	var initESW = function(gslbBaseURL) { 
+		embedded_svc.settings.displayHelpButton = true; //Or false
+		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+		
+		embedded_svc.settings.loadingText = 'Connecting to support...'; // Custom loading message
+		embedded_svc.settings.chatbotAvatarImgURL = "https://megaport--peeklogicd.sandbox.my.site.com/einsteinSupport/resource/1758619710000/MegaportLogoSVG";
+
+		// Set initial dimensions
+		var currentDeviceType = getDeviceType();
+		setWidgetDimensions(currentDeviceType);
+
+		// Store current device type for comparison
+		var lastDeviceType = currentDeviceType;
+
+
+		// Resize event handler with debouncing
+		var resizeTimeout;
+		function handleResize() {
+			clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(function() {
+				var newDeviceType = getDeviceType();
+				
+				// Only update if device type actually changed
+				if (newDeviceType !== lastDeviceType) {
+					console.log('Device type changed from', lastDeviceType, 'to', newDeviceType);
+					
+					// Update settings
+					setWidgetDimensions(newDeviceType);
+					
+					// Apply CSS changes to existing chat window
+					applyCSSChanges(newDeviceType);
+					
+					// Update stored device type
+					lastDeviceType = newDeviceType;
+					
+					// Trigger a refresh of the chat widget if it's open
+					var chatContainer = document.querySelector('.embeddedServiceSidebar');
+					if (chatContainer && chatContainer.style.display !== 'none') {
+						// Force a re-render by toggling visibility briefly
+						chatContainer.style.visibility = 'hidden';
+						setTimeout(function() {
+							chatContainer.style.visibility = 'visible';
+						}, 50);
+					}
+				} else {
+					// Even if device type didn't change, apply CSS for minor adjustments
+					applyCSSChanges(newDeviceType);
+				}
+			}, 250); // 250ms debounce delay
+		}
+
+		// Add resize event listener
+		window.addEventListener('resize', handleResize);
+
+
+
+		// Add orientation change listener for mobile devices
+		window.addEventListener('orientationchange', function() {
+			setTimeout(handleResize, 100); // Small delay to let orientation change complete
+		});
+
+			// ADD THIS NEW EVENT HANDLER - fires when chat window is maximized (including resumed chats)
+		embedded_svc.addEventHandler("afterMaximize", function(data) {
+			console.log('Chat maximized - adding restart button if needed', data);
+			addRestartButton();
+			setupFooterObserver(); // Ensure observer is running
+			
+			// Check if there was a successful transfer before page refresh
+			setTimeout(function() {
+				var chatTransferred = localStorage.getItem('chatTransferSuccessful');
+				var storedSessionKey = localStorage.getItem('chatSessionKey');
+				var liveAgentFooter = document.querySelector('.embeddedServiceLiveAgentStateChatInputFooter');
+				
+				if (chatTransferred === 'true' && storedSessionKey && liveAgentFooter) {
+					// Try to get current session key from embedded service
+					try {
+						var currentSessionKey = embedded_svc.liveAgentAPI.sessionId || 
+											embedded_svc.liveAgentAPI.getSessionId?.() ||
+											data?.liveAgentSessionKey;
+						
+						console.log('Stored session key:', storedSessionKey);
+						console.log('Current session key:', currentSessionKey);
+						
+						// Verify session keys match before showing input
+						if (currentSessionKey && currentSessionKey === storedSessionKey) {
+							console.log('Session keys match - showing input field');
+							addChasitorText();
+						} else if (!currentSessionKey) {
+							// If we can't get current session key but chat is active, show input anyway
+							console.log('Cannot verify session key, but live agent footer exists - showing input field');
+							addChasitorText();
+						} else {
+							console.log('Session keys do not match - clearing old state');
+							localStorage.removeItem('chatTransferSuccessful');
+							localStorage.removeItem('chatSessionKey');
+						}
+					} catch (error) {
+						console.error('Error checking session key:', error);
+						// Fallback: if live agent footer exists, show input
+						console.log('Error occurred, showing input as fallback');
+						addChasitorText();
+					}
+				} else {
+					console.log('No transfer state or not a live agent session - keeping input hidden');
+				}
+			}, 300);	
+		});
+
+		// ADD THIS NEW EVENT HANDLER - fires when chat is minimized
+		embedded_svc.addEventHandler("afterMinimize", function(data) {
+			console.log('Chat minimized', data);
+		});
+
+		embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+			console.log('Help button clicked', data);
+			startLoadingAnimation();
+			fixButtonStyling();
+		});
+		
+		embedded_svc.addEventHandler("onChatEstablished", function(data) {
+			console.log('Chat established', data);
+			stopLoadingAnimation();
+
+		    // Live agent connected → show input
+		    //addChasitorText();
+			// Apply responsive styling when chat opens
+		    setTimeout(function() {
+		    	applyCSSChanges(getDeviceType());
+		    }, 100);
+			addRestartButton();
+			setupFooterObserver(); // Set up observer to monitor footer changes
+		});
+
+			
+		embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
+			console.log("onChatTransferSuccessful event was fired. liveAgentSessionKey was " +
+			data.liveAgentSessionKey);
+					
+			// Store transfer state in localStorage
+			localStorage.setItem('chatTransferSuccessful', 'true');
+			localStorage.setItem('chatSessionKey', data.liveAgentSessionKey);
+			
+			// Show the input field when live agent is connected
+			addChasitorText();
+
+			// Keep the restart button visible - user can still restart if needed
+			const restartButtonContainer = document.querySelector('.restart-button-container');
+			restartButtonContainer.style.setProperty('padding-top', '0px', 'important');
+			console.log('restartButtonContainer remains visible', restartButtonContainer);
+				
+		});
+			
+
+		embedded_svc.addEventHandler("onAgentMessage", function(data) {
+			console.log("onAgentMessage", data);
+			setTimeout(function() {
+				const agentMessages = document.querySelectorAll('.embeddedServiceLiveAgentStateChatItem.agent');
+				if (agentMessages.length > 0) {
+					const lastMessage = agentMessages[agentMessages.length - 1];
+					
+					// Try to find just the message content, not the agent name
+					const messageContent = lastMessage.querySelector('.chatContent') || 
+										   lastMessage.querySelector('.messageContent') ||
+										   lastMessage.querySelector('.embeddedServiceLiveAgentStateChatMessage') ||
+										   lastMessage;
+					
+					const messageText = messageContent.textContent.trim();
+					console.log("✅ Agent message text:", messageText);
+					
+					// Also log the element structure to see what's inside
+					console.log("Message element structure:", lastMessage);
+
+					if (messageText === noAgentMessage) {
+						console.log("Unavailable message text found:", messageText);
+						var customEvent = new CustomEvent('chatLiveAgentUnavailable', {
+							detail: {},
+							bubbles: true,
+							composed: true
+						});
+						document.dispatchEvent(customEvent);
+					}
+				}
+			}, 200);
+		});
+
+		// Event handler for when chat is closed/ended
+		embedded_svc.addEventHandler("onChatEndedByChasitor", function(data) {
+			console.log('Chat ended', data);
+			window.insent.greetingMessageClosed(event);
+			console.log('Chat closed - state cleared');
+		});
+
+
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
+
+		embedded_svc.init(
+			'https://megaport--peeklogicd.sandbox.my.salesforce.com',
+			'https://megaport--peeklogicd.sandbox.my.site.com/einsteinSupport',
+			gslbBaseURL,
+			'00DH30000000naQ',
+			'Support_queue',
+			{
+				baseLiveAgentContentURL: 'https://c.la12s-core1.sfdc-vwfla6.salesforceliveagent.com/content',
+				deploymentId: '5726F000000HVqE',
+				buttonId: '5739n000000dMIP',
+				baseLiveAgentURL: 'https://d.la12s-core1.sfdc-vwfla6.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'Support_queue',
+				isOfflineSupportEnabled: true
+			}
+		);
+
+
+	};
+
+	if (!window.embedded_svc) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://megaport--peeklogicd.sandbox.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+</script>
+</html>
