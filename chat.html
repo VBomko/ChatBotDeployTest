@@ -58,7 +58,7 @@
 		width: 32px !important;
 		height: 32px !important;
 		background-color: white !important;
-		background-image: url("https://megaport--pldschatdt.sandbox.my.site.com/einsteinSupport/resource/1762267521000/MegaportLogoSVG") !important;
+		background-image: url("https://megaport--pldschatdt.sandbox.my.site.com/salesChatSupport/resource/1762267521000/MegaportLogoSVG") !important;
 		background-size: 24px 24px !important;
 		background-repeat: no-repeat !important;
 		background-position: center !important;
@@ -116,7 +116,7 @@
 	.embeddedServiceHelpButton .helpButton .uiButton:hover:before,
 	.embeddedServiceHelpButton .helpButton .uiButton:focus:before {
 		background-color: white !important;
-		background-image: url("https://megaport--pldschatdt.sandbox.my.site.com/einsteinSupport/resource/1762267521000/MegaportLogoSVG") !important;
+		background-image: url("https://megaport--pldschatdt.sandbox.my.site.com/salesChatSupport/resource/1762267521000/MegaportLogoSVG") !important;
 		filter: none !important;
 		opacity: 1 !important;
 		mix-blend-mode: normal !important;
@@ -243,7 +243,7 @@
 		width: 32px !important;
 		height: 32px !important;
 		background-color: white !important;
-		background-image: url("https://megaport--pldschatdt.sandbox.my.site.com/einsteinSupport/resource/1762267521000/MegaportLogoSVG") !important;
+		background-image: url("https://megaport--pldschatdt.sandbox.my.site.com/salesChatSupport/resource/1762267521000/MegaportLogoSVG") !important;
 		background-size: 24px 24px !important;
 		background-repeat: no-repeat !important;
 		background-position: center !important;
@@ -260,7 +260,7 @@
 	:host .minimizedContainer:focus:before,
 	.embeddedServiceSidebar .minimizedContainer:hover:before {
 		background-color: white !important;
-		background-image: url("https://megaport--pldschatdt.sandbox.my.site.com/einsteinSupport/resource/1762267521000/MegaportLogoSVG") !important;
+		background-image: url("https://megaport--pldschatdt.sandbox.my.site.com/salesChatSupport/resource/1762267521000/MegaportLogoSVG") !important;
 		filter: none !important;
 		opacity: 1 !important;
 		mix-blend-mode: normal !important;
@@ -942,7 +942,7 @@ div.endChatContainer button:last-child {
 	};
 	// Function to get device type based on screen width
 	function getDeviceType() {
-		console.log('added testing');
+		console.log('added new bot configs');
 		var screenWidth = window.innerWidth;
 		if (screenWidth <= 768) return 'mobile';
 		if (screenWidth <= 1024) return 'tablet';
@@ -1249,7 +1249,7 @@ div.endChatContainer button:last-child {
 		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
 		
 		embedded_svc.settings.loadingText = 'Connecting to support...'; // Custom loading message
-		embedded_svc.settings.chatbotAvatarImgURL = "https://megaport--pldschatdt.sandbox.my.site.com/einsteinSupport/resource/1762267521000/MegaportLogoSVG";
+		embedded_svc.settings.chatbotAvatarImgURL = "https://megaport--pldschatdt.sandbox.my.site.com/salesChatSupport/resource/1762267521000/MegaportLogoSVG";
 
 		// Set initial dimensions
 		var currentDeviceType = getDeviceType();
@@ -1437,21 +1437,18 @@ div.endChatContainer button:last-child {
 		});
 
 
-		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-		embedded_svc.settings.entryFeature = 'LiveAgent';
-
 		embedded_svc.init(
 			'https://megaport--pldschatdt.sandbox.my.salesforce.com',
-			'https://megaport--pldschatdt.sandbox.my.site.com/einsteinSupport',
+			'https://megaport--pldschatdt.sandbox.my.site.com/salesChatSupport',
 			gslbBaseURL,
 			'00D8r000009Fsyz',
-			'Support_queue',
+			'Sales_Chat',
 			{
 				baseLiveAgentContentURL: 'https://c.la12s-core1.sfdc-vwfla6.salesforceliveagent.com/content',
 				deploymentId: '5726F000000HVqE',
-				buttonId: '5738r0000019Ker',
+				buttonId: '5738r0000019PJZ',
 				baseLiveAgentURL: 'https://d.la12s-core1.sfdc-vwfla6.salesforceliveagent.com/chat',
-				eswLiveAgentDevName: 'Support_queue',
+				eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I9n0000009EDREA2_19a53842497',
 				isOfflineSupportEnabled: true
 			}
 		);
